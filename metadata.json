@@ -1,0 +1,8 @@
+{
+  "name": "AuraLink",
+  "description": "High-tech biomechanical analysis tool for athletes using Gemini AI to provide real-time performance feedback and HUD-style metrics.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": []
+}

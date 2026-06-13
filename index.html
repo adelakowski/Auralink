@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AuraLink | Biomechanical HUD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+      body {
+        margin: 0;
+        background-color: #050505;
+        color: #e0e0e0;
+        font-family: 'JetBrains Mono', monospace;
+        overflow-x: hidden;
+      }
+      .font-orbitron {
+        font-family: 'Orbitron', sans-serif;
+      }
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0a0a0a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #39ff14;
+        border-radius: 2px;
+      }
+      .neon-glow {
+        box-shadow: 0 0 10px rgba(57, 255, 20, 0.3), 0 0 20px rgba(57, 255, 20, 0.1);
+      }
+      .neon-text {
+        text-shadow: 0 0 8px rgba(57, 255, 20, 0.6);
+      }
+      .scanline {
+        width: 100%;
+        height: 100px;
+        z-index: 10;
+        background: linear-gradient(0deg, rgba(57, 255, 20, 0) 0%, rgba(57, 255, 20, 0.1) 50%, rgba(57, 255, 20, 0) 100%);
+        opacity: 0.1;
+        position: absolute;
+        bottom: 100%;
+        pointer-events: none;
+        animation: scan 4s linear infinite;
+      }
+      @keyframes scan {
+        0% { bottom: 100%; }
+        100% { bottom: -10%; }
+      }
+      
+      /* Snapshot mode styles - Forced high-quality report layout */
+      .snapshot-mode {
+        width: 1200px !important; /* Force a standard desktop width for the capture */
+        height: auto !important;
+        min-height: 800px !important;
+        padding: 60px !important;
+        background: #020202 !important;
+        border: 4px double rgba(57, 255, 20, 0.4) !important;
+        display: flex !important;
+        flex-direction: column !important;
+      }
+      
+      .snapshot-mode::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(circle at center, rgba(57, 255, 20, 0.05) 0%, transparent 70%),
+                          linear-gradient(rgba(57, 255, 20, 0.02) 1px, transparent 1px), 
+                          linear-gradient(90deg, rgba(57, 255, 20, 0.02) 1px, transparent 1px);
+        background-size: 100% 100%, 40px 40px, 40px 40px;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* Force horizontal grid layout during capture regardless of screen size */
+      .snapshot-mode .flex-col.xl\:grid {
+        display: grid !important;
+        grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+        width: 100% !important;
+        gap: 12px !important;
+      }
+      .snapshot-mode .xl\:col-span-8 { grid-column: span 8 / span 8 !important; }
+      .snapshot-mode .xl\:col-span-4 { grid-column: span 4 / span 4 !important; }
+
+      /* Expand feedback box to show all text in report */
+      .snapshot-mode .max-h-\[220px\] {
+        max-height: none !important;
+        overflow: visible !important;
+      }
+
+      /* Clean up UI elements for the exported image */
+      .snapshot-mode .custom-scrollbar::-webkit-scrollbar { display: none !important; }
+      .snapshot-mode .custom-scrollbar { scrollbar-width: none !important; overflow: visible !important; }
+      
+      .snapshot-mode [data-hide-on-snap] { display: none !important; }
+      .snapshot-mode [data-show-on-snap] { display: block !important; }
+
+      /* Ensure Gauge text is legible on snap */
+      .snapshot-mode .aura-gauge-text {
+        color: #ffffff !important;
+        text-shadow: 0 0 15px #39ff14 !important;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "@google/genai": "https://esm.sh/@google/genai@^1.39.0",
+    "html2canvas": "https://esm.sh/html2canvas@^1.4.1",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
